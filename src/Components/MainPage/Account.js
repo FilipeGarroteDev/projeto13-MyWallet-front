@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Header } from "../../Common/Header";
 
 export default function Account(){
 
@@ -12,14 +14,18 @@ export default function Account(){
         <span>Não há registros de entrada ou saída</span>
       </TransationsHistoric>
       <Movimentation>
-        <div>
-          <h1>X</h1>
-          <span>Nova entrada</span>
-        </div>
-        <div>
-          <h1>X</h1>
-          <span>Nova saída</span>
-        </div>
+        <Link to="/inflow">
+          <div>
+            <h1>X</h1>
+            <span>Nova entrada</span>
+          </div>
+        </Link>
+        <Link to="/outflow">
+          <div>
+            <h1>X</h1>
+            <span>Nova saída</span>
+          </div>
+        </Link>
       </Movimentation>
     </Container>
   )
@@ -34,21 +40,7 @@ const Container = styled.div`
   align-items: center;
 `
 
-const Header = styled.header`
-  height: 80px;
-  width: 86%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h1, span{
-    font-size: 26px;
-    font-weight: 700;
-    color: white;
-  }
-`
-
-const TransationsHistoric = styled.header`
+const TransationsHistoric = styled.div`
   height: 67%;
   width: 86%;
   display: flex;
@@ -65,17 +57,20 @@ const TransationsHistoric = styled.header`
   }
 `
 
-const Movimentation = styled.header`
+const Movimentation = styled.div`
   height: 21%;
   width: 86%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 15px;
 
-  div{
+  a{
     height: 80%;
-    width: 47%;
+    width: 100%;
+  }
+
+  div{
+    height: 100%;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
