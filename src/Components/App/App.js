@@ -1,6 +1,6 @@
-import { GlobalStyle, Reset } from "./globalStyle"
+import { GlobalStyle, Reset } from "../../Common/globalStyle"
 import {BrowserRouter, Routes, Route} from "react-router-dom"
-import Teste from "./Teste"
+import SignIn from "../SignIn/SignIn"
 
 
 export default function App(){
@@ -10,7 +10,7 @@ export default function App(){
       <GlobalStyle/>
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Teste/>}/>
+        <Route path="/" element={<SignIn/>}/>
       </Routes>
       </BrowserRouter>
     </>
