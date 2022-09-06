@@ -43,8 +43,6 @@ table {
 `;
 
 const GlobalStyle  = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,400;0,700;0,900;1,400;1,700;1,900&family=Saira+Stencil+One&display=swap');
-
   *{
     font-family: 'Raleway', sans-serif;
     box-sizing: border-box;
