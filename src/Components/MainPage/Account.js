@@ -99,6 +99,8 @@ const TransationsHistoric = styled.div`
     display: flex;
     flex-direction: column;
     gap:25px;
+    overflow-y: auto;
+    margin-bottom: 15px;
 
     span{
       width: 180px;
