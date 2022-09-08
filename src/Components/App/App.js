@@ -32,8 +32,8 @@ export default function App() {
           <Route path="/" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/account" element={<Account transacoesMockadas={transacoesMockadas} />} />
-          <Route path="/inflow" element={<Inflow />} />
-          <Route path="/outflow" element={<Outflow />} />
+          <Route path="/inflow" element={<Inflow transacoesMockadas={transacoesMockadas} />} />
+          <Route path="/outflow" element={<Outflow transacoesMockadas={transacoesMockadas} />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
