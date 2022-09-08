@@ -1,16 +1,24 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Header } from '../../Common/Header';
 
 export default function Account({ transacoesMockadas }) {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Header>
         <h1>Olá, Fulano</h1>
-        <span>X</span>
+        <ion-icon
+          name="exit-outline"
+          onClick={() => {
+            alert('Até mais, Fulano!! :)');
+            navigate('/');
+          }}
+        />
       </Header>
 
       <Transations transacoesMockadas={transacoesMockadas} />
@@ -18,13 +26,13 @@ export default function Account({ transacoesMockadas }) {
       <Movimentation>
         <Link to="/inflow">
           <div>
-            <h1>X</h1>
+            <ion-icon name="add-circle-outline" />
             <span>Nova entrada</span>
           </div>
         </Link>
         <Link to="/outflow">
           <div>
-            <h1>X</h1>
+            <ion-icon name="remove-circle-outline" />
             <span>Nova saída</span>
           </div>
         </Link>
@@ -96,11 +104,12 @@ const TransationsHistoric = styled.div`
   padding-top: 23px;
 
   ul {
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap:25px;
     overflow-y: auto;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 
     span{
       width: 180px;
@@ -163,5 +172,10 @@ const Movimentation = styled.div`
       font-size: 17px;
       font-weight: 700;
     }
+  }
+
+  ion-icon{
+    color: #ffffff;
+    font-size: 32px
   }
 `;

@@ -40,7 +40,12 @@ export default function Inflow({ transacoesMockadas }) {
     <Container>
       <Header>
         <h1>Nova entrada</h1>
-        <span>X</span>
+        <ion-icon
+          name="exit-outline"
+          onClick={() => {
+            navigate('/account');
+          }}
+        />
       </Header>
       <Form onSubmit={submitForm}>
         <input type="number" name="value" placeholder="Valor" onChange={handleForm} />

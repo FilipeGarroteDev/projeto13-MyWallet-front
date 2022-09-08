@@ -8,10 +8,14 @@ const Header = styled.header`
   justify-content: space-between;
   align-items: center;
 
-  h1, span{
+  h1, ion-icon{
     font-size: 26px;
     font-weight: 700;
     color: white;
+  }
+
+  ion-icon{
+    font-size: 32px;
   }
 `;
 
