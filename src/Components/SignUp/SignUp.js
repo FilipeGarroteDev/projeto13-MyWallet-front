@@ -4,12 +4,13 @@
 /* eslint-disable react/jsx-filename-extension */
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form } from '../../Common/Form';
 import UserContext from '../../Contexts/UserContext';
 
 export default function SignIn() {
-  const { user, setUser } = useContext(UserContext);
+  const { users, setUsers } = useContext(UserContext);
+  const [user, setUser] = useState({});
   const navigate = useNavigate();
 
   function sendForm(e) {
@@ -24,7 +25,11 @@ export default function SignIn() {
       alert('As senhas informadas são distintas.\nPor gentileza, confirme corretamente sua senha.');
       return;
     }
-    console.log(user);
+    setUsers([
+      ...users,
+      user,
+    ]);
+    console.log(users);
     alert(`Usuário criado com sucesso!!\nBem-vindo ${name}!!! =)`);
     navigate('/');
   }

@@ -12,10 +12,10 @@ import Outflow from '../MainPage/Outflow';
 import UserContext from '../../Contexts/UserContext';
 
 export default function App() {
-  const [user, setUser] = useState({});
+  const [users, setUsers] = useState([]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ users, setUsers }}>
       <Reset />
       <GlobalStyle />
       <BrowserRouter>
