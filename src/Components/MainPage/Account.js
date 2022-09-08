@@ -20,9 +20,11 @@ export default function Account({ transacoesMockadas }) {
           }}
         />
       </Header>
-
-      <Transations transacoesMockadas={transacoesMockadas} />
-
+      <TransationsContainer trans={transacoesMockadas}>
+        {transacoesMockadas.length === 0
+          ? <span>Não há registros de entrada ou saída</span>
+          : <Transations transacoesMockadas={transacoesMockadas} />}
+      </TransationsContainer>
       <Movimentation>
         <Link to="/inflow">
           <div>
@@ -57,22 +59,20 @@ function Transations({ transacoesMockadas }) {
   calculateBalance();
 
   return (
-    <TransationsHistoric trans={transacoesMockadas} balance={balance}>
+    <TransationsHistoric balance={balance}>
       <ul>
-        {transacoesMockadas.length === 0
-          ? <span>Não há registros de entrada ou saída</span>
-          : transacoesMockadas.map(({
-            date, description, value, type,
-          }) => (
-            <Operation type={type}>
-              <p>
-                <em>{date}</em>
-                {' '}
-                {description}
-              </p>
-              <strong>{value}</strong>
-            </Operation>
-          ))}
+        {transacoesMockadas.map(({
+          date, description, value, type,
+        }) => (
+          <Operation type={type}>
+            <p>
+              <em>{date}</em>
+              {' '}
+              {description}
+            </p>
+            <strong>{value}</strong>
+          </Operation>
+        ))}
       </ul>
       <section>
         <h3>SALDO</h3>
@@ -91,7 +91,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const TransationsHistoric = styled.div`
+const TransationsContainer = styled.div`
   height: 67%;
   width: 86%;
   display: flex;
@@ -103,20 +103,24 @@ const TransationsHistoric = styled.div`
   padding: 12px;
   padding-top: 23px;
 
-  ul {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap:25px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-
-    span{
+  span{
       width: 180px;
       font-size: 20px;
       color: #868686;
       text-align: center;
     }
+`;
+
+const TransationsHistoric = styled.div`
+  height: 100%;
+  
+  ul {
+    height: 97%;
+    display: flex;
+    flex-direction: column;
+    gap:25px;
+    overflow-y: auto;
+    padding-bottom: 20px;
   }
 
   section{
@@ -128,7 +132,7 @@ const TransationsHistoric = styled.div`
       font-weight: 700;
     }
     strong{
-      color: ${(props) => (props.balance > 0 ? '#03AC00' : '#C70000')}
+      color: ${(props) => (props.balance >= 0 ? '#03AC00' : '#C70000')}
     }
   }
 `;

@@ -13,15 +13,7 @@ import UserContext from '../../Contexts/UserContext';
 
 export default function App() {
   const [users, setUsers] = useState([]);
-  const transacoesMockadas = [{
-    date: '10/07', description: 'Rolê', value: '39.90', type: 'saída',
-  }, {
-    date: '15/08', description: 'Computador', value: '3900.90', type: 'saída',
-  }, {
-    date: '20/12', description: 'Presente de Natal', value: '150.00', type: 'saída',
-  }, {
-    date: '01/07', description: 'Salário', value: '15000.00', type: 'entrada',
-  }];
+  const transacoesMockadas = [];
 
   return (
     <UserContext.Provider value={{ users, setUsers }}>

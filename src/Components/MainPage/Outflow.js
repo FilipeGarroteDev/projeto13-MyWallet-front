@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-filename-extension */
@@ -15,7 +16,7 @@ export default function Outflow({ transacoesMockadas }) {
   function handleForm(e) {
     setNegativeEntry({
       ...negativeEntry,
-      [e.target.name]: e.target.value,
+      [e.target.name]: isNaN(e.target.value) ? e.target.value : Number(e.target.value).toFixed(2),
     });
   }
 
