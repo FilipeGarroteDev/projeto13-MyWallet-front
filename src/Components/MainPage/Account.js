@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { Header } from "../../Common/Header";
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { Header } from '../../Common/Header';
 
-export default function Account(){
-
-  return(
+export default function Account() {
+  return (
     <Container>
       <Header>
         <h1>Olá, Fulano</h1>
@@ -28,7 +29,7 @@ export default function Account(){
         </Link>
       </Movimentation>
     </Container>
-  )
+  );
 }
 
 const Container = styled.div`
@@ -38,7 +39,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const TransationsHistoric = styled.div`
   height: 67%;
@@ -55,7 +56,7 @@ const TransationsHistoric = styled.div`
     color: #868686;
     text-align: center;
   }
-`
+`;
 
 const Movimentation = styled.div`
   height: 21%;
@@ -86,4 +87,4 @@ const Movimentation = styled.div`
       font-weight: 700;
     }
   }
-`
+`;

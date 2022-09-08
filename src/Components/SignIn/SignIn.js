@@ -1,26 +1,28 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { Form } from "../../Common/Form";
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-filename-extension */
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { Form } from '../../Common/Form';
 
-export default function SignIn(){
-
-  function sendForm(e){
-    e.preventDefault()
+export default function SignIn() {
+  function sendForm(e) {
+    e.preventDefault();
   }
 
-  return(
+  return (
     <Container>
       <h1>MyWallet</h1>
       <Form onSubmit={sendForm}>
         <input type="email" placeholder="E-mail" />
         <input type="password" placeholder="Senha" />
-        <button>Entrar</button>
+        <button type="submit">Entrar</button>
       </Form>
       <Link to="/signup">
         Primeira vez? Cadastre-se!
       </Link>
     </Container>
-  )
+  );
 }
 
 const Container = styled.main`
@@ -44,4 +46,4 @@ const Container = styled.main`
     color: white;
     margin-top: 36px;
   }
-`
+`;

@@ -1,5 +1,5 @@
-import styled from "styled-components"
-
+/* eslint-disable import/prefer-default-export */
+import styled from 'styled-components';
 
 const Header = styled.header`
   height: 80px;
@@ -13,6 +13,6 @@ const Header = styled.header`
     font-weight: 700;
     color: white;
   }
-`
+`;
 
-export {Header}
+export { Header };

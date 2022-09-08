@@ -1,4 +1,5 @@
-import styled from "styled-components"
+/* eslint-disable import/prefer-default-export */
+import styled from 'styled-components';
 
 const Form = styled.form`
   width: 100%;
@@ -28,6 +29,6 @@ const Form = styled.form`
     font-weight: 700;
     color: #FFFFFF;
   }
-`
+`;
 
-export {Form}
+export { Form };

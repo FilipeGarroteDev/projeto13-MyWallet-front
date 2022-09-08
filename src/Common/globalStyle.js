@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const Reset = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -42,7 +42,7 @@ table {
 }
 `;
 
-const GlobalStyle  = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
   *{
     font-family: 'Raleway', sans-serif;
     box-sizing: border-box;
@@ -62,7 +62,6 @@ const GlobalStyle  = createGlobalStyle`
     background-color: #8C11BE;
   }
 
-`
+`;
 
-export {Reset, GlobalStyle}
-
+export { Reset, GlobalStyle };

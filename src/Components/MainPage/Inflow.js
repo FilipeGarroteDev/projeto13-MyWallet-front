@@ -1,10 +1,12 @@
-import styled from "styled-components";
-import { Form } from "../../Common/Form";
-import { Header } from "../../Common/Header";
+/* eslint-disable react/jsx-filename-extension */
 
-export default function Inflow(){
+import React from 'react';
+import styled from 'styled-components';
+import { Form } from '../../Common/Form';
+import { Header } from '../../Common/Header';
 
-  return(
+export default function Inflow() {
+  return (
     <Container>
       <Header>
         <h1>Nova entrada</h1>
@@ -13,10 +15,10 @@ export default function Inflow(){
       <Form>
         <input type="number" placeholder="Valor" />
         <input type="text" placeholder="Descrição" />
-        <button>Salvar entrada</button>
+        <button type="submit">Salvar entrada</button>
       </Form>
     </Container>
-  )
+  );
 }
 
 const Container = styled.div`
@@ -25,4 +27,4 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
