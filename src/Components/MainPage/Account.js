@@ -1,19 +1,20 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Header } from '../../Common/Header';
 
-export default function Account() {
+export default function Account({ transacoesMockadas }) {
   return (
     <Container>
       <Header>
         <h1>Olá, Fulano</h1>
         <span>X</span>
       </Header>
-      <TransationsHistoric>
-        <span>Não há registros de entrada ou saída</span>
-      </TransationsHistoric>
+
+      <Transations transacoesMockadas={transacoesMockadas} />
+
       <Movimentation>
         <Link to="/inflow">
           <div>
@@ -32,6 +33,47 @@ export default function Account() {
   );
 }
 
+function Transations({ transacoesMockadas }) {
+  let balance = 0;
+
+  function calculateBalance() {
+    transacoesMockadas.forEach((mov) => {
+      if (mov.type === 'entrada') {
+        balance += Number(mov.value);
+      } else if (mov.type === 'saída') {
+        balance -= Number(mov.value);
+      }
+    });
+    return balance;
+  }
+  calculateBalance();
+
+  return (
+    <TransationsHistoric trans={transacoesMockadas} balance={balance}>
+      <ul>
+        {transacoesMockadas.length === 0
+          ? <span>Não há registros de entrada ou saída</span>
+          : transacoesMockadas.map(({
+            date, description, value, type,
+          }) => (
+            <Operation type={type}>
+              <p>
+                <em>{date}</em>
+                {' '}
+                {description}
+              </p>
+              <strong>{value}</strong>
+            </Operation>
+          ))}
+      </ul>
+      <section>
+        <h3>SALDO</h3>
+        <p><strong>{balance.toFixed(2)}</strong></p>
+      </section>
+    </TransationsHistoric>
+  );
+}
+
 const Container = styled.div`
   height: 100vh;
   width: 100%;
@@ -45,16 +87,49 @@ const TransationsHistoric = styled.div`
   height: 67%;
   width: 86%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: ${(props) => (props.trans.length === 0 ? 'center' : 'space-between')};
+  align-items: ${(props) => (props.trans.length === 0 ? 'center' : 'space-between')};
   border-radius: 5px;
   background-color: #FFFFFF;
+  padding: 12px;
+  padding-top: 23px;
 
-  span{
-    width: 180px;
-    font-size: 20px;
-    color: #868686;
-    text-align: center;
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap:25px;
+
+    span{
+      width: 180px;
+      font-size: 20px;
+      color: #868686;
+      text-align: center;
+    }
+  }
+
+  section{
+    display: flex;
+    justify-content: space-between;
+
+    h3{
+      font-size: 17px;
+      font-weight: 700;
+    }
+    strong{
+      color: ${(props) => (props.balance > 0 ? '#03AC00' : '#C70000')}
+    }
+  }
+`;
+
+const Operation = styled.li`
+  display: flex;
+  justify-content: space-between;
+  em{
+    color: #c6c6c6;
+  }
+  strong{
+    color: ${(props) => (props.type === 'saída' ? '#C70000' : '#03AC00')}
   }
 `;
 
