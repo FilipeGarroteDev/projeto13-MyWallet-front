@@ -10,22 +10,47 @@ import Account from '../MainPage/Account';
 import Inflow from '../MainPage/Inflow';
 import Outflow from '../MainPage/Outflow';
 import UserContext from '../../Contexts/UserContext';
+import PrivateRoute from '../MainPage/PrivateRoute';
 
 export default function App() {
   const [token, setToken] = useState('');
-  const transacoesMockadas = [];
+  const [user, setUser] = useState({});
 
   return (
-    <UserContext.Provider value={{ token, setToken }}>
+    <UserContext.Provider value={{
+      token, setToken, user, setUser,
+    }}
+    >
       <Reset />
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/account" element={<Account transacoesMockadas={transacoesMockadas} />} />
-          <Route path="/inflow" element={<Inflow transacoesMockadas={transacoesMockadas} />} />
-          <Route path="/outflow" element={<Outflow transacoesMockadas={transacoesMockadas} />} />
+          <Route
+            path="/account"
+            element={(
+              <PrivateRoute>
+                <Account />
+              </PrivateRoute>
+          )}
+          />
+          <Route
+            path="/inflow"
+            element={(
+              <PrivateRoute>
+                <Inflow />
+              </PrivateRoute>
+          )}
+          />
+          <Route
+            path="/outflow"
+            element={(
+              <PrivateRoute>
+                <Outflow />
+              </PrivateRoute>
+          )}
+          />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

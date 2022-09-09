@@ -1,17 +1,23 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
-import React from 'react';
+
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Header } from '../../Common/Header';
+import UserContext from '../../Contexts/UserContext';
 
-export default function Account({ transacoesMockadas }) {
+export default async function Account() {
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   return (
     <Container>
       <Header>
-        <h1>Olá, Fulano</h1>
+        <h1>
+          Olá, $
+          {user.name}
+        </h1>
         <ion-icon
           name="exit-outline"
           onClick={() => {
