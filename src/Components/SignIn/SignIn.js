@@ -42,8 +42,8 @@ export default function SignIn() {
     <Container>
       <h1>MyWallet</h1>
       <Form onSubmit={sendForm}>
-        <input type="email" name="email" placeholder="E-mail" onChange={handleForm} />
-        <input type="password" name="password" placeholder="Senha" onChange={handleForm} />
+        <input type="email" name="email" placeholder="E-mail" onChange={handleForm} required />
+        <input type="password" name="password" placeholder="Senha" onChange={handleForm} required />
         <button type="submit">Entrar</button>
       </Form>
       <Link to="/signup">

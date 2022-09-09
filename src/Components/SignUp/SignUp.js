@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Form } from '../../Common/Form';
 
-export default function SignIn() {
+export default function SignUp() {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
 
@@ -44,10 +44,10 @@ export default function SignIn() {
     <Container>
       <h1>MyWallet</h1>
       <Form onSubmit={sendForm}>
-        <input type="text" name="name" placeholder="Nome" onChange={handleForm} />
-        <input type="email" name="email" placeholder="E-mail" onChange={handleForm} />
-        <input type="password" name="password" placeholder="Senha" onChange={handleForm} />
-        <input type="password" name="confirmedPassword" placeholder="Confirme a senha" onChange={handleForm} />
+        <input type="text" name="name" placeholder="Nome" onChange={handleForm} required />
+        <input type="email" name="email" placeholder="E-mail" onChange={handleForm} required />
+        <input type="password" name="password" placeholder="Senha" onChange={handleForm} required />
+        <input type="password" name="confirmedPassword" placeholder="Confirme a senha" onChange={handleForm} required />
         <button type="submit">Cadastrar</button>
       </Form>
       <Link to="/">
