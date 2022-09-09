@@ -4,16 +4,15 @@
 /* eslint-disable react/jsx-filename-extension */
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { Form } from '../../Common/Form';
-import UserContext from '../../Contexts/UserContext';
 
 export default function SignIn() {
-  const { users, setUsers } = useContext(UserContext);
   const [user, setUser] = useState({});
   const navigate = useNavigate();
 
-  function sendForm(e) {
+  async function sendForm(e) {
     e.preventDefault();
     const {
       name, email, password, confirmedPassword,
@@ -22,22 +21,22 @@ export default function SignIn() {
       alert('Todos os campos são de preenchimento obrigatório.\nPor gentileza, revise seus dados! :)');
       return;
     } if (confirmedPassword !== password) {
-      alert('As senhas informadas são distintas.\nPor gentileza, confirme corretamente sua senha.');
+      alert('As senhas informadas são distintas.\nPor gentileza, revise seus dados!');
       return;
     }
-    setUsers([
-      ...users,
-      user,
-    ]);
-    console.log(users);
-    alert(`Usuário criado com sucesso!!\nBem-vindo ${name}!!! =)`);
-    navigate('/');
+    try {
+      await axios.post('http://localhost:5000/signup', { name, email, password });
+      alert('Usuário criado com sucesso!! =)');
+      navigate('/');
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
-  function handleForm(bolinha) {
+  function handleForm(e) {
     setUser({
       ...user,
-      [bolinha.target.name]: bolinha.target.value,
+      [e.target.name]: e.target.value,
     });
   }
 

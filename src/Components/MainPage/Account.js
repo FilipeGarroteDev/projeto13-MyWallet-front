@@ -140,6 +140,7 @@ const TransationsHistoric = styled.div`
 const Operation = styled.li`
   display: flex;
   justify-content: space-between;
+
   em{
     color: #c6c6c6;
   }

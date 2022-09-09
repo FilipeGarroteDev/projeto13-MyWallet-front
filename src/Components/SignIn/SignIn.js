@@ -1,26 +1,32 @@
+/* eslint-disable no-console */
 /* eslint-disable no-alert */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useContext, useState } from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Form } from '../../Common/Form';
-import UserContext from '../../Contexts/UserContext';
 
 export default function SignIn() {
-  const { users } = useContext(UserContext);
   const [login, setLogin] = useState({});
   const navigate = useNavigate();
 
-  function sendForm(e) {
+  async function sendForm(e) {
     e.preventDefault();
-    const foundUser = users.find((value) => value.email === login.email);
-    if (!foundUser || foundUser.password !== login.password) {
-      alert('O e-mail ou senha informados está(ão) incorreto(s).\nPor gentileza, verifique seus dados.');
+
+    if (!login.email || !login.password) {
+      alert('Todos os campos são de preenchimento obrigatório.\nPor gentileza, verifique seus dados.');
       return;
     }
-    alert(`Seja bem vindo, ${foundUser.name}!! =)`);
-    navigate('/account');
+
+    try {
+      await axios.post('http://localhost:5000/login', login);
+      alert(`Seja bem vindo, ${foundUser.name}!! =)`);
+      navigate('/account');
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   function handleForm(e) {

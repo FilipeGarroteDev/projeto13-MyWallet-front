@@ -12,7 +12,7 @@ import Outflow from '../MainPage/Outflow';
 import UserContext from '../../Contexts/UserContext';
 
 export default function App() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([{ name: 'sdajdao', email: '123@123.123', password: '123' }]);
   const transacoesMockadas = [];
 
   return (
