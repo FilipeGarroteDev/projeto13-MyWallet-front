@@ -3,29 +3,31 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-filename-extension */
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Form } from '../../Common/Form';
+import UserContext from '../../Contexts/UserContext';
 
 export default function SignIn() {
   const [login, setLogin] = useState({});
   const navigate = useNavigate();
+  const { setToken } = useContext(UserContext);
 
   async function sendForm(e) {
     e.preventDefault();
 
     if (!login.email || !login.password) {
-      alert('Todos os campos são de preenchimento obrigatório.\nPor gentileza, verifique seus dados.');
+      alert('Formato inválido de dados.\nO e-mail deve ter formato de email (xxx@xxx.xxx) e a senha não pode ser vazia');
       return;
     }
 
     try {
-      await axios.post('http://localhost:5000/login', login);
-      alert(`Seja bem vindo, ${foundUser.name}!! =)`);
+      const loginPromise = await axios.post('http://localhost:5000/login', login);
+      setToken(loginPromise.data);
       navigate('/account');
     } catch (error) {
-      console.log(error.message);
+      alert(error.response.data);
     }
   }
 

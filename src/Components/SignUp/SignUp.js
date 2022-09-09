@@ -29,7 +29,7 @@ export default function SignIn() {
       alert('Usuário criado com sucesso!! =)');
       navigate('/');
     } catch (error) {
-      console.log(error.message);
+      alert(error.response.data);
     }
   }
 

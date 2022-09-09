@@ -12,11 +12,11 @@ import Outflow from '../MainPage/Outflow';
 import UserContext from '../../Contexts/UserContext';
 
 export default function App() {
-  const [users, setUsers] = useState([{ name: 'sdajdao', email: '123@123.123', password: '123' }]);
+  const [token, setToken] = useState('');
   const transacoesMockadas = [];
 
   return (
-    <UserContext.Provider value={{ users, setUsers }}>
+    <UserContext.Provider value={{ token, setToken }}>
       <Reset />
       <GlobalStyle />
       <BrowserRouter>
