@@ -3,15 +3,18 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import axios from 'axios';
 import { Form } from '../../Common/Form';
 import { Header } from '../../Common/Header';
+import UserContext from '../../Contexts/UserContext';
 
-export default function Inflow({ transacoesMockadas }) {
+export default function Inflow() {
   const [positiveEntry, setPositiveEntry] = useState({});
+  const { token } = useContext(UserContext);
   const navigate = useNavigate();
 
   function handleForm(e) {
@@ -21,17 +24,24 @@ export default function Inflow({ transacoesMockadas }) {
     });
   }
 
-  function submitForm(e) {
+  async function submitForm(e) {
     e.preventDefault();
     if (!positiveEntry.value || !positiveEntry.description) {
       alert('Todos os valores são de preenchimento obrigatório.\nPor favor, revise os dados!');
       return;
     }
-    transacoesMockadas.push({
+    const transaction = {
       ...positiveEntry,
       date: dayjs(Date.now()).format('DD/MM'),
       type: 'entrada',
-    });
+    };
+
+    try {
+      await axios.post('http://localhost:5000/transactions', transaction, { headers: { Authorization: token } });
+    } catch (error) {
+      console.log(error.message);
+    }
+
     alert('Sua entrada foi registrada! :)');
     navigate('/account');
   }

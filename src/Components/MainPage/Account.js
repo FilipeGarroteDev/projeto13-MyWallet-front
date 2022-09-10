@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 
@@ -88,8 +89,8 @@ function Transactions({ transactionsList }) {
       <ul>
         {transactionsList.map(({
           date, description, value, type,
-        }) => (
-          <Operation type={type}>
+        }, key) => (
+          <Operation key={key} type={type}>
             <p>
               <em>{date}</em>
               {' '}
@@ -143,7 +144,7 @@ const TransactionsHistoric = styled.div`
     height: 97%;
     display: flex;
     flex-direction: column;
-    gap:25px;
+    gap:20px;
     overflow-y: auto;
     padding-bottom: 20px;
   }
