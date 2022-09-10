@@ -15,7 +15,7 @@ export default function PrivateRoute({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    async function fetchData() {
+    async function validateToken() {
       try {
         const validatedToken = await axios.post('http://localhost:5000/login/sessions', {}, {
           headers: {
@@ -27,7 +27,7 @@ export default function PrivateRoute({ children }) {
         navigate('/');
       }
     }
-    fetchData();
+    validateToken();
   }, []);
 
   return (

@@ -1,15 +1,33 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 import { Header } from '../../Common/Header';
 import UserContext from '../../Contexts/UserContext';
 
 export default function Account() {
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
+  const [transactionsList, setTransactionsList] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const transactions = await axios.get('http://localhost:5000/transactions', {
+          headers: {
+            Authorization: token,
+          },
+        });
+        setTransactionsList(transactions.data);
+      } catch (error) {
+        alert(error.response.data);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <Container>
@@ -27,11 +45,11 @@ export default function Account() {
           }}
         />
       </Header>
-      {/* <TransationsContainer trans={transacoesMockadas}>
-        {transacoesMockadas.length === 0
+      <TransactionsContainer trans={transactionsList}>
+        {transactionsList.length === 0
           ? <span>Não há registros de entrada ou saída</span>
-          : <Transations transacoesMockadas={transacoesMockadas} />} */}
-      <TransationsContainer trans={[]} />
+          : <Transactions transactionsList={transactionsList} />}
+      </TransactionsContainer>
       <Movimentation>
         <Link to="/inflow">
           <div>
@@ -50,44 +68,44 @@ export default function Account() {
   );
 }
 
-// function Transations({ transacoesMockadas }) {
-//   let balance = 0;
+function Transactions({ transactionsList }) {
+  let balance = 0;
 
-//   function calculateBalance() {
-//     transacoesMockadas.forEach((mov) => {
-//       if (mov.type === 'entrada') {
-//         balance += Number(mov.value);
-//       } else if (mov.type === 'saída') {
-//         balance -= Number(mov.value);
-//       }
-//     });
-//     return balance;
-//   }
-//   calculateBalance();
+  function calculateBalance() {
+    transactionsList.forEach((mov) => {
+      if (mov.type === 'entrada') {
+        balance += Number(mov.value);
+      } else if (mov.type === 'saída') {
+        balance -= Number(mov.value);
+      }
+    });
+    return balance;
+  }
+  calculateBalance();
 
-//   return (
-//     <TransationsHistoric balance={balance}>
-//       <ul>
-//         {transacoesMockadas.map(({
-//           date, description, value, type,
-//         }) => (
-//           <Operation type={type}>
-//             <p>
-//               <em>{date}</em>
-//               {' '}
-//               {description}
-//             </p>
-//             <strong>{value}</strong>
-//           </Operation>
-//         ))}
-//       </ul>
-//       <section>
-//         <h3>SALDO</h3>
-//         <p><strong>{balance.toFixed(2)}</strong></p>
-//       </section>
-//     </TransationsHistoric>
-//   );
-// }
+  return (
+    <TransactionsHistoric balance={balance}>
+      <ul>
+        {transactionsList.map(({
+          date, description, value, type,
+        }) => (
+          <Operation type={type}>
+            <p>
+              <em>{date}</em>
+              {' '}
+              {description}
+            </p>
+            <strong>{value}</strong>
+          </Operation>
+        ))}
+      </ul>
+      <section>
+        <h3>SALDO</h3>
+        <p><strong>{balance.toFixed(2)}</strong></p>
+      </section>
+    </TransactionsHistoric>
+  );
+}
 
 const Container = styled.div`
   height: 100vh;
@@ -98,7 +116,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const TransationsContainer = styled.div`
+const TransactionsContainer = styled.div`
   height: 67%;
   width: 86%;
   display: flex;
@@ -118,43 +136,43 @@ const TransationsContainer = styled.div`
     }
 `;
 
-// const TransationsHistoric = styled.div`
-//   height: 100%;
+const TransactionsHistoric = styled.div`
+  height: 100%;
 
-//   ul {
-//     height: 97%;
-//     display: flex;
-//     flex-direction: column;
-//     gap:25px;
-//     overflow-y: auto;
-//     padding-bottom: 20px;
-//   }
+  ul {
+    height: 97%;
+    display: flex;
+    flex-direction: column;
+    gap:25px;
+    overflow-y: auto;
+    padding-bottom: 20px;
+  }
 
-//   section{
-//     display: flex;
-//     justify-content: space-between;
+  section{
+    display: flex;
+    justify-content: space-between;
 
-//     h3{
-//       font-size: 17px;
-//       font-weight: 700;
-//     }
-//     strong{
-//       color: ${(props) => (props.balance >= 0 ? '#03AC00' : '#C70000')}
-//     }
-//   }
-// `;
+    h3{
+      font-size: 17px;
+      font-weight: 700;
+    }
+    strong{
+      color: ${(props) => (props.balance >= 0 ? '#03AC00' : '#C70000')}
+    }
+  }
+`;
 
-// const Operation = styled.li`
-//   display: flex;
-//   justify-content: space-between;
+const Operation = styled.li`
+  display: flex;
+  justify-content: space-between;
 
-//   em{
-//     color: #c6c6c6;
-//   }
-//   strong{
-//     color: ${(props) => (props.type === 'saída' ? '#C70000' : '#03AC00')}
-//   }
-// `;
+  em{
+    color: #c6c6c6;
+  }
+  strong{
+    color: ${(props) => (props.type === 'saída' ? '#C70000' : '#03AC00')}
+  }
+`;
 
 const Movimentation = styled.div`
   height: 21%;

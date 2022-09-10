@@ -25,6 +25,7 @@ export default function SignUp() {
       return;
     }
     try {
+      console.log('Oi');
       await axios.post('http://localhost:5000/signup', { name, email, password });
       alert('Usuário criado com sucesso!! =)');
       navigate('/');
