@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
@@ -13,6 +15,7 @@ export default function Account() {
   const { user, token } = useContext(UserContext);
   const [transactionsList, setTransactionsList] = useState([]);
   const navigate = useNavigate();
+  console.log(transactionsList);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,6 +28,7 @@ export default function Account() {
         setTransactionsList(transactions.data);
       } catch (error) {
         alert(error.response.data);
+        navigate('/');
       }
     }
     fetchData();
@@ -49,7 +53,12 @@ export default function Account() {
       <TransactionsContainer trans={transactionsList}>
         {transactionsList.length === 0
           ? <span>Não há registros de entrada ou saída</span>
-          : <Transactions transactionsList={transactionsList} />}
+          : (
+            <Transactions
+              transactionsList={transactionsList}
+              setTransactionsList={setTransactionsList}
+            />
+          )}
       </TransactionsContainer>
       <Movimentation>
         <Link to="/inflow">
@@ -69,34 +78,50 @@ export default function Account() {
   );
 }
 
-function Transactions({ transactionsList }) {
-  let balance = 0;
+function Transactions({ transactionsList, setTransactionsList }) {
+  // const [isConfirmed, setIsConfirmed] = useState(false);
+  const { token } = useContext(UserContext);
 
-  function calculateBalance() {
-    transactionsList.forEach((mov) => {
-      if (mov.type === 'entrada') {
-        balance += Number(mov.value);
-      } else if (mov.type === 'saída') {
-        balance -= Number(mov.value);
+  const balance = transactionsList.reduce((acc, cur) => {
+    if (cur.type === 'entrada') {
+      return acc + Number(cur.value);
+    }
+    return acc - Number(cur.value);
+  }, 0);
+
+  async function deleteTransaction(transactionId) {
+    const config = {
+      headers: {
+        Authorization: token,
+      },
+    };
+
+    if (window.confirm('Tem certeza que quer excluir essa transação?')) {
+      try {
+        await axios.delete(`http://localhost:5000/transactions/${transactionId}`, config);
+        const newTransactionsList = await axios.get('http://localhost:5000/transactions', config);
+        setTransactionsList(newTransactionsList.data);
+      } catch (error) {
+        alert(error.response.data);
       }
-    });
-    return balance;
+    }
   }
-  calculateBalance();
 
   return (
     <TransactionsHistoric balance={balance}>
       <ul>
         {transactionsList.map(({
-          date, description, value, type,
+          date, description, value, type, _id,
         }, key) => (
           <Operation key={key} type={type}>
             <p>
               <em>{date}</em>
-              {' '}
-              {description}
+              <span>{description}</span>
             </p>
-            <strong>{value}</strong>
+            <p>
+              <strong>{value}</strong>
+              <em onClick={() => deleteTransaction(_id)}>x</em>
+            </p>
           </Operation>
         ))}
       </ul>
@@ -141,12 +166,12 @@ const TransactionsHistoric = styled.div`
   height: 100%;
 
   ul {
-    height: 97%;
+    height: 93%;
     display: flex;
     flex-direction: column;
     gap:20px;
     overflow-y: auto;
-    padding-bottom: 20px;
+    margin-bottom: 20px;
   }
 
   section{
@@ -167,11 +192,17 @@ const Operation = styled.li`
   display: flex;
   justify-content: space-between;
 
+  span{
+    margin-left: 10px;
+    font-size: 16px;
+    color: #000000;
+  }
   em{
     color: #c6c6c6;
   }
   strong{
-    color: ${(props) => (props.type === 'saída' ? '#C70000' : '#03AC00')}
+    color: ${(props) => (props.type === 'saída' ? '#C70000' : '#03AC00')};
+    margin-right: 10px;
   }
 `;
 
