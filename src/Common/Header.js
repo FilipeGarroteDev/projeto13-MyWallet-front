@@ -16,6 +16,7 @@ const Header = styled.header`
 
   ion-icon{
     font-size: 32px;
+    cursor: pointer;
   }
 `;
 

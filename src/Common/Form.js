@@ -16,6 +16,11 @@ const Form = styled.form`
     font-size: 20px;
     padding-left: 15px;
     border: none;
+    outline: none;
+
+    &::placeholder{
+      color: #797979;
+    }
   }
 
   button{
@@ -31,6 +36,11 @@ const Form = styled.form`
     font-size: 20px;
     font-weight: 700;
     color: #FFFFFF;
+
+    &:hover{
+      cursor: pointer;
+      filter: brightness(110%);
+    }
   }
 `;
 

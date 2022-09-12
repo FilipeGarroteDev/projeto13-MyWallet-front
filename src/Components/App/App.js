@@ -6,12 +6,12 @@ import React, { useState } from 'react';
 import { GlobalStyle, Reset } from '../../Common/globalStyle';
 import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
-import Account from '../MainPage/Account';
-import Inflow from '../MainPage/Inflow';
-import Outflow from '../MainPage/Outflow';
+import Account from '../MainPage/homepage/Account';
+import Inflow from '../MainPage/transactionsActions/Inflow';
+import Outflow from '../MainPage/transactionsActions/Outflow';
 import UserContext from '../../Contexts/UserContext';
 import PrivateRoute from '../MainPage/PrivateRoute';
-import EditTransactionPage from '../MainPage/EditTransactionPage';
+import EditTransactionPage from '../MainPage/transactionsActions/EditTransactionPage';
 
 export default function App() {
   const [token, setToken] = useState('');

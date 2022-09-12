@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react/jsx-no-bind */
@@ -10,9 +12,9 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import axios from 'axios';
 import { ThreeDots } from 'react-loader-spinner';
-import { Form } from '../../Common/Form';
-import { Header } from '../../Common/Header';
-import UserContext from '../../Contexts/UserContext';
+import { Form } from '../../../Common/Form';
+import { Header } from '../../../Common/Header';
+import UserContext from '../../../Contexts/UserContext';
 
 export default function Inflow() {
   const [positiveEntry, setPositiveEntry] = useState({});

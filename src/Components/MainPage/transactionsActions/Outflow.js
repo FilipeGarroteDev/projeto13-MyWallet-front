@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react/prop-types */
@@ -9,9 +10,9 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ThreeDots } from 'react-loader-spinner';
-import { Form } from '../../Common/Form';
-import { Header } from '../../Common/Header';
-import UserContext from '../../Contexts/UserContext';
+import { Form } from '../../../Common/Form';
+import { Header } from '../../../Common/Header';
+import UserContext from '../../../Contexts/UserContext';
 
 export default function Outflow() {
   const [negativeEntry, setNegativeEntry] = useState({});

@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/prop-types */
@@ -8,9 +9,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import axios from 'axios';
-import { Form } from '../../Common/Form';
-import { Header } from '../../Common/Header';
-import UserContext from '../../Contexts/UserContext';
+import { Form } from '../../../Common/Form';
+import { Header } from '../../../Common/Header';
+import UserContext from '../../../Contexts/UserContext';
 
 export default function EditTransactionPage() {
   const { id } = useParams();
