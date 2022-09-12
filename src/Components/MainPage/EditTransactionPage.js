@@ -4,7 +4,7 @@
 /* eslint-disable react/jsx-filename-extension */
 
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import axios from 'axios';
@@ -12,32 +12,32 @@ import { Form } from '../../Common/Form';
 import { Header } from '../../Common/Header';
 import UserContext from '../../Contexts/UserContext';
 
-export default function Inflow() {
-  const [positiveEntry, setPositiveEntry] = useState({});
-  const { token } = useContext(UserContext);
+export default function EditTransactionPage() {
+  const { id } = useParams();
+  const [newEntry, setNewEntry] = useState({});
+  const { token, isPositiveEntry } = useContext(UserContext);
   const navigate = useNavigate();
 
   function handleForm(e) {
-    setPositiveEntry({
-      ...positiveEntry,
+    setNewEntry({
+      ...newEntry,
       [e.target.name]: isNaN(e.target.value) ? e.target.value : Number(e.target.value).toFixed(2),
     });
   }
 
   async function submitForm(e) {
     e.preventDefault();
-    if (!positiveEntry.value || !positiveEntry.description) {
+    if (!newEntry.value || !newEntry.description) {
       alert('Todos os valores são de preenchimento obrigatório.\nPor favor, revise os dados!');
       return;
     }
     const transaction = {
-      ...positiveEntry,
+      ...newEntry,
       date: dayjs(Date.now()).format('DD/MM'),
-      type: 'entrada',
     };
 
     try {
-      await axios.post('http://localhost:5000/transactions', transaction, { headers: { Authorization: token } });
+      await axios.put(`http://localhost:5000/transactions/${id}`, transaction, { headers: { Authorization: token } });
       alert('Sua entrada foi registrada! :)');
       navigate('/account');
     } catch (error) {
@@ -49,7 +49,7 @@ export default function Inflow() {
   return (
     <Container>
       <Header>
-        <h1>Nova entrada</h1>
+        {isPositiveEntry ? <h1>Editar entrada</h1> : <h1>Editar saída</h1> }
         <ion-icon
           name="exit-outline"
           onClick={() => {
@@ -60,7 +60,9 @@ export default function Inflow() {
       <Form onSubmit={submitForm}>
         <input type="number" name="value" placeholder="Valor" onChange={handleForm} />
         <input type="text" name="description" placeholder="Descrição" onChange={handleForm} />
-        <button type="submit">Salvar entrada</button>
+        {isPositiveEntry
+          ? <button type="submit">Atualizar entrada</button>
+          : <button type="submit">Atualizar saída</button>}
       </Form>
     </Container>
   );

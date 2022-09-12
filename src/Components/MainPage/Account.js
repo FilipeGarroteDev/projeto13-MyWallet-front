@@ -80,7 +80,8 @@ export default function Account() {
 
 function Transactions({ transactionsList, setTransactionsList }) {
   // const [isConfirmed, setIsConfirmed] = useState(false);
-  const { token } = useContext(UserContext);
+  const { token, setIsPositiveEntry } = useContext(UserContext);
+  const navigate = useNavigate('/');
 
   const balance = transactionsList.reduce((acc, cur) => {
     if (cur.type === 'entrada') {
@@ -116,7 +117,19 @@ function Transactions({ transactionsList, setTransactionsList }) {
           <Operation key={key} type={type}>
             <p>
               <em>{date}</em>
-              <span>{description}</span>
+              <span onClick={() => {
+                if (type === 'saída') {
+                  setIsPositiveEntry(false);
+                  navigate(`/edit/${_id}`);
+                } else if (type === 'entrada') {
+                  setIsPositiveEntry(true);
+                  navigate(`/edit/${_id}`);
+                }
+              }}
+              >
+                {description}
+
+              </span>
             </p>
             <p>
               <strong>{value}</strong>

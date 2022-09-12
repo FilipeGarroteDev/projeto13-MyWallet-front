@@ -11,14 +11,16 @@ import Inflow from '../MainPage/Inflow';
 import Outflow from '../MainPage/Outflow';
 import UserContext from '../../Contexts/UserContext';
 import PrivateRoute from '../MainPage/PrivateRoute';
+import EditTransactionPage from '../MainPage/EditTransactionPage';
 
 export default function App() {
   const [token, setToken] = useState('');
   const [user, setUser] = useState({});
+  const [isPositiveEntry, setIsPositiveEntry] = useState(true);
 
   return (
     <UserContext.Provider value={{
-      token, setToken, user, setUser,
+      token, setToken, user, setUser, isPositiveEntry, setIsPositiveEntry,
     }}
     >
       <Reset />
@@ -48,6 +50,14 @@ export default function App() {
             element={(
               <PrivateRoute>
                 <Outflow />
+              </PrivateRoute>
+          )}
+          />
+          <Route
+            path="/edit/:id"
+            element={(
+              <PrivateRoute>
+                <EditTransactionPage />
               </PrivateRoute>
           )}
           />

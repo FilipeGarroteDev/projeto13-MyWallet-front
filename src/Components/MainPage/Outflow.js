@@ -37,14 +37,12 @@ export default function Outflow() {
 
     try {
       await axios.post('http://localhost:5000/transactions', transaction, { headers: { Authorization: token } });
+      alert('Sua entrada foi registrada! :)');
+      navigate('/account');
     } catch (error) {
       alert('Seu acesso expirou. Por gentileza, refaça o login!');
       navigate('/');
-      return;
     }
-
-    alert('Sua entrada foi registrada! :)');
-    navigate('/account');
   }
 
   return (
