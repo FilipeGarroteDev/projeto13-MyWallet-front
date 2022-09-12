@@ -37,6 +37,14 @@ export default function Account() {
     fetchData();
   }, []);
 
+  async function clearSession() {
+    try {
+      await axios.delete(`http://localhost:5000/session/${token}`);
+    } catch (error) {
+      alert(error.response.data);
+    }
+  }
+
   return (
     <Container>
       <Header>
@@ -49,6 +57,7 @@ export default function Account() {
           name="exit-outline"
           onClick={() => {
             localStorage.clear();
+            clearSession();
             alert(`Até mais, ${user.name}!! :)`);
             navigate('/');
           }}
