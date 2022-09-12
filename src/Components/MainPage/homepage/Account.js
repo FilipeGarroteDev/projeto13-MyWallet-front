@@ -56,8 +56,8 @@ export default function Account() {
         <ion-icon
           name="exit-outline"
           onClick={() => {
-            localStorage.clear();
             clearSession();
+            localStorage.clear();
             alert(`Até mais, ${user.name}!! :)`);
             navigate('/');
           }}
