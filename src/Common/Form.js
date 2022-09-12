@@ -19,6 +19,9 @@ const Form = styled.form`
   }
 
   button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 48px;
     width: 86%;
     border-radius: 5px;

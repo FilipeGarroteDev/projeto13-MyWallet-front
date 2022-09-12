@@ -21,14 +21,14 @@ export default function EditTransactionPage() {
   function handleForm(e) {
     setNewEntry({
       ...newEntry,
-      [e.target.name]: isNaN(e.target.value) ? e.target.value : Number(e.target.value).toFixed(2),
+      [e.target.name]: e.target.value,
     });
   }
 
   async function submitForm(e) {
     e.preventDefault();
-    if (!newEntry.value || !newEntry.description) {
-      alert('Todos os valores são de preenchimento obrigatório.\nPor favor, revise os dados!');
+    if (!newEntry.value && !newEntry.description) {
+      alert('Você precisa preencher pelo menos um dos campos.\nPor favor, revise os dados!');
       return;
     }
     const transaction = {
@@ -58,7 +58,7 @@ export default function EditTransactionPage() {
         />
       </Header>
       <Form onSubmit={submitForm}>
-        <input type="number" name="value" placeholder="Valor" onChange={handleForm} />
+        <input type="number" name="value" placeholder="Valor" step="any" onChange={handleForm} />
         <input type="text" name="description" placeholder="Descrição" onChange={handleForm} />
         {isPositiveEntry
           ? <button type="submit">Atualizar entrada</button>

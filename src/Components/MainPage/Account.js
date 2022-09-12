@@ -15,7 +15,6 @@ export default function Account() {
   const { user, token } = useContext(UserContext);
   const [transactionsList, setTransactionsList] = useState([]);
   const navigate = useNavigate();
-  console.log(transactionsList);
 
   useEffect(() => {
     async function fetchData() {
@@ -132,7 +131,7 @@ function Transactions({ transactionsList, setTransactionsList }) {
               </span>
             </p>
             <p>
-              <strong>{value}</strong>
+              <strong>{Number(value).toFixed(2)}</strong>
               <em onClick={() => deleteTransaction(_id)}>x</em>
             </p>
           </Operation>

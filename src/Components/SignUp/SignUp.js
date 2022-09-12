@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-no-bind */
@@ -6,31 +7,38 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import React, { useState } from 'react';
 import axios from 'axios';
+import { ThreeDots } from 'react-loader-spinner';
 import { Form } from '../../Common/Form';
 
 export default function SignUp() {
+  const [isClicked, setIsClicked] = useState(false);
   const [user, setUser] = useState({});
   const navigate = useNavigate();
 
   async function sendForm(e) {
     e.preventDefault();
-    const {
-      name, email, password, confirmedPassword,
-    } = user;
-    if (!name || !email || !password) {
-      alert('Todos os campos são de preenchimento obrigatório.\nPor gentileza, revise seus dados! :)');
-      return;
-    } if (confirmedPassword !== password) {
-      alert('As senhas informadas são distintas.\nPor gentileza, revise seus dados!');
-      return;
-    }
-    try {
-      console.log('Oi');
-      await axios.post('http://localhost:5000/signup', { name, email, password });
-      alert('Usuário criado com sucesso!! =)');
-      navigate('/');
-    } catch (error) {
-      alert(error.response.data);
+    if (!isClicked) {
+      setIsClicked(true);
+      const {
+        name, email, password, confirmedPassword,
+      } = user;
+      if (!name || !email || !password) {
+        alert('Todos os campos são de preenchimento obrigatório.\nPor gentileza, revise seus dados! :)');
+        setIsClicked(false);
+        return;
+      } if (confirmedPassword !== password) {
+        alert('As senhas informadas são distintas.\nPor gentileza, revise seus dados!');
+        setIsClicked(false);
+        return;
+      }
+      try {
+        await axios.post('http://localhost:5000/signup', { name, email, password });
+        alert('Usuário criado com sucesso!! =)');
+        navigate('/');
+      } catch (error) {
+        alert(error.response.data);
+        setIsClicked(false);
+      }
     }
   }
 
@@ -45,11 +53,13 @@ export default function SignUp() {
     <Container>
       <h1>MyWallet</h1>
       <Form onSubmit={sendForm}>
-        <input type="text" name="name" placeholder="Nome" onChange={handleForm} required />
-        <input type="email" name="email" placeholder="E-mail" onChange={handleForm} required />
-        <input type="password" name="password" placeholder="Senha" onChange={handleForm} required />
-        <input type="password" name="confirmedPassword" placeholder="Confirme a senha" onChange={handleForm} required />
-        <button type="submit">Cadastrar</button>
+        <input type="text" name="name" placeholder="Nome" onChange={handleForm} disabled={!!isClicked} />
+        <input type="email" name="email" placeholder="E-mail" onChange={handleForm} disabled={!!isClicked} />
+        <input type="password" name="password" placeholder="Senha" onChange={handleForm} disabled={!!isClicked} />
+        <input type="password" name="confirmedPassword" placeholder="Confirme a senha" onChange={handleForm} disabled={!!isClicked} />
+        {isClicked
+          ? <button type="submit"><ThreeDots color="white" /></button>
+          : <button type="submit">Entrar</button>}
       </Form>
       <Link to="/">
         Já tem uma conta? Entre agora!

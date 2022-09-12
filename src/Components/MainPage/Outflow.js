@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-no-bind */
@@ -7,6 +8,7 @@ import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { ThreeDots } from 'react-loader-spinner';
 import { Form } from '../../Common/Form';
 import { Header } from '../../Common/Header';
 import UserContext from '../../Contexts/UserContext';
@@ -15,33 +17,38 @@ export default function Outflow() {
   const [negativeEntry, setNegativeEntry] = useState({});
   const { token } = useContext(UserContext);
   const navigate = useNavigate();
+  const [isClicked, setIsClicked] = useState(false);
 
   function handleForm(e) {
     setNegativeEntry({
       ...negativeEntry,
-      [e.target.name]: isNaN(e.target.value) ? e.target.value : Number(e.target.value).toFixed(2),
+      [e.target.name]: e.target.value,
     });
   }
 
   async function submitForm(e) {
     e.preventDefault();
-    if (!negativeEntry.value || !negativeEntry.description) {
-      alert('Todos os campos são de preenchimento obrigatório.\nPor favor, revise seus dados.');
-      return;
-    }
-    const transaction = {
-      ...negativeEntry,
-      date: dayjs(Date.now()).format('DD/MM'),
-      type: 'saída',
-    };
+    if (!isClicked) {
+      setIsClicked(true);
+      if (!negativeEntry.value || !negativeEntry.description) {
+        alert('Todos os campos são de preenchimento obrigatório.\nPor favor, revise seus dados.');
+        setIsClicked(false);
+        return;
+      }
+      const transaction = {
+        ...negativeEntry,
+        date: dayjs(Date.now()).format('DD/MM'),
+        type: 'saída',
+      };
 
-    try {
-      await axios.post('http://localhost:5000/transactions', transaction, { headers: { Authorization: token } });
-      alert('Sua entrada foi registrada! :)');
-      navigate('/account');
-    } catch (error) {
-      alert('Seu acesso expirou. Por gentileza, refaça o login!');
-      navigate('/');
+      try {
+        await axios.post('http://localhost:5000/transactions', transaction, { headers: { Authorization: token } });
+        alert('Sua entrada foi registrada! :)');
+        navigate('/account');
+      } catch (error) {
+        alert('Seu acesso expirou. Por gentileza, refaça o login!');
+        navigate('/');
+      }
     }
   }
 
@@ -57,9 +64,11 @@ export default function Outflow() {
         />
       </Header>
       <Form onSubmit={submitForm}>
-        <input type="number" name="value" placeholder="Valor" onChange={handleForm} />
-        <input type="text" name="description" placeholder="Descrição" onChange={handleForm} />
-        <button type="submit">Salvar saída</button>
+        <input type="number" name="value" placeholder="Valor" onChange={handleForm} step="any" disabled={!!isClicked} />
+        <input type="text" name="description" placeholder="Descrição" onChange={handleForm} disabled={!!isClicked} />
+        {isClicked
+          ? <button type="submit"><ThreeDots color="white" /></button>
+          : <button type="submit">Entrar</button>}
       </Form>
     </Container>
   );
