@@ -11,7 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import UserContext from '../../../Contexts/UserContext';
 
 export default function Transactions({ transactionsList, setTransactionsList }) {
-  const { token, setIsPositiveEntry } = useContext(UserContext);
+  const { setIsPositiveEntry } = useContext(UserContext);
+  const token = localStorage.getItem('token');
   const navigate = useNavigate('/');
 
   const balance = transactionsList.reduce((acc, cur) => {
@@ -34,7 +35,9 @@ export default function Transactions({ transactionsList, setTransactionsList }) 
         const newTransactionsList = await axios.get('http://localhost:5000/transactions', config);
         setTransactionsList(newTransactionsList.data);
       } catch (error) {
+        localStorage.clear();
         alert(error.response.data);
+        navigate('/');
       }
     }
   }

@@ -4,18 +4,23 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-filename-extension */
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ThreeDots } from 'react-loader-spinner';
 import { Form } from '../../Common/Form';
-import UserContext from '../../Contexts/UserContext';
 
 export default function SignIn() {
   const [login, setLogin] = useState({});
   const [isClicked, setIsClicked] = useState(false);
   const navigate = useNavigate();
-  const { setToken } = useContext(UserContext);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/account');
+    }
+  }, []);
 
   async function sendForm(e) {
     e.preventDefault();
@@ -30,7 +35,7 @@ export default function SignIn() {
 
       try {
         const loginPromise = await axios.post('http://localhost:5000/login', login);
-        setToken(loginPromise.data);
+        localStorage.setItem('token', loginPromise.data);
         navigate('/account');
       } catch (error) {
         alert(error.response.data);

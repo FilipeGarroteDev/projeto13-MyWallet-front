@@ -14,13 +14,12 @@ import PrivateRoute from '../MainPage/PrivateRoute';
 import EditTransactionPage from '../MainPage/transactionsActions/EditTransactionPage';
 
 export default function App() {
-  const [token, setToken] = useState('');
   const [user, setUser] = useState({});
   const [isPositiveEntry, setIsPositiveEntry] = useState(true);
 
   return (
     <UserContext.Provider value={{
-      token, setToken, user, setUser, isPositiveEntry, setIsPositiveEntry,
+      user, setUser, isPositiveEntry, setIsPositiveEntry,
     }}
     >
       <Reset />

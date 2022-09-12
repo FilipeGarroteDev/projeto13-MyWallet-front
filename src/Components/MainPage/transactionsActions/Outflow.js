@@ -4,7 +4,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
@@ -12,11 +12,10 @@ import axios from 'axios';
 import { ThreeDots } from 'react-loader-spinner';
 import { Form } from '../../../Common/Form';
 import { Header } from '../../../Common/Header';
-import UserContext from '../../../Contexts/UserContext';
 
 export default function Outflow() {
   const [negativeEntry, setNegativeEntry] = useState({});
-  const { token } = useContext(UserContext);
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
 
@@ -48,6 +47,7 @@ export default function Outflow() {
         navigate('/account');
       } catch (error) {
         alert('Seu acesso expirou. Por gentileza, refaça o login!');
+        localStorage.clear();
         navigate('/');
       }
     }

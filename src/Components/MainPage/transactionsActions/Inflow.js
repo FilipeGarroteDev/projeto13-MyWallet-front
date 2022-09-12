@@ -6,7 +6,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
 
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
@@ -14,11 +14,10 @@ import axios from 'axios';
 import { ThreeDots } from 'react-loader-spinner';
 import { Form } from '../../../Common/Form';
 import { Header } from '../../../Common/Header';
-import UserContext from '../../../Contexts/UserContext';
 
 export default function Inflow() {
   const [positiveEntry, setPositiveEntry] = useState({});
-  const { token } = useContext(UserContext);
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const [isClicked, setIsClicked] = useState(false);
 
@@ -27,7 +26,6 @@ export default function Inflow() {
       ...positiveEntry,
       [e.target.name]: e.target.value,
     });
-    console.log(positiveEntry);
   }
 
   async function submitForm(e) {
@@ -51,6 +49,7 @@ export default function Inflow() {
         navigate('/account');
       } catch (error) {
         alert('Seu acesso expirou. Por gentileza, refaça o login!');
+        localStorage.clear();
         navigate('/');
       }
     }

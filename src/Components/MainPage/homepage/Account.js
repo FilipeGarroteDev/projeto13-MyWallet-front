@@ -14,8 +14,9 @@ import UserContext from '../../../Contexts/UserContext';
 import Transactions from './Transactions';
 
 export default function Account() {
-  const { user, token } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [transactionsList, setTransactionsList] = useState([]);
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +30,7 @@ export default function Account() {
         setTransactionsList(transactions.data);
       } catch (error) {
         alert(error.response.data);
+        localStorage.clear();
         navigate('/');
       }
     }
@@ -46,6 +48,7 @@ export default function Account() {
         <ion-icon
           name="exit-outline"
           onClick={() => {
+            localStorage.clear();
             alert(`Até mais, ${user.name}!! :)`);
             navigate('/');
           }}
@@ -99,6 +102,7 @@ const TransactionsContainer = styled.div`
   background-color: #FFFFFF;
   padding: 12px;
   padding-top: 23px;
+  padding-bottom: 20px;
 
   span{
       width: 180px;

@@ -11,19 +11,22 @@ import { useNavigate } from 'react-router-dom';
 import UserContext from '../../Contexts/UserContext';
 
 export default function PrivateRoute({ children }) {
-  const { token, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     async function validateToken() {
+      const storedToken = localStorage.getItem('token');
       try {
         const validatedToken = await axios.post('http://localhost:5000/login/sessions', {}, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${storedToken}`,
           },
         });
         setUser(validatedToken.data);
       } catch (error) {
+        localStorage.clear();
         navigate('/');
       }
     }

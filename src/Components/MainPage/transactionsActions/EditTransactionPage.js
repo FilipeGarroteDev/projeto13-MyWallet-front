@@ -16,7 +16,8 @@ import UserContext from '../../../Contexts/UserContext';
 export default function EditTransactionPage() {
   const { id } = useParams();
   const [newEntry, setNewEntry] = useState({});
-  const { token, isPositiveEntry } = useContext(UserContext);
+  const { isPositiveEntry } = useContext(UserContext);
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
   function handleForm(e) {
@@ -43,6 +44,7 @@ export default function EditTransactionPage() {
       navigate('/account');
     } catch (error) {
       alert('Seu acesso expirou. Por gentileza, refaça o login!');
+      localStorage.clear();
       navigate('/');
     }
   }
