@@ -32,7 +32,7 @@ export default function SignUp() {
         return;
       }
       try {
-        await axios.post('http://localhost:5000/signup', { name, email, password });
+        await axios.post('https://projeto13-mywallet-fgarrote.herokuapp.com/signup', { name, email, password });
         alert('Usuário criado com sucesso!! =)');
         navigate('/');
       } catch (error) {

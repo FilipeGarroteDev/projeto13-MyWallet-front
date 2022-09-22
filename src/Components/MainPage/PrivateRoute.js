@@ -19,7 +19,7 @@ export default function PrivateRoute({ children }) {
     async function validateToken() {
       const storedToken = localStorage.getItem('token');
       try {
-        const validatedToken = await axios.post('http://localhost:5000/login/sessions', {}, {
+        const validatedToken = await axios.post('https://projeto13-mywallet-fgarrote.herokuapp.com/login/sessions', {}, {
           headers: {
             Authorization: `Bearer ${storedToken}`,
           },

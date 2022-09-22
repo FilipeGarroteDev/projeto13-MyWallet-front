@@ -31,8 +31,8 @@ export default function Transactions({ transactionsList, setTransactionsList }) 
 
     if (window.confirm('Tem certeza que quer excluir essa transação?')) {
       try {
-        await axios.delete(`http://localhost:5000/transactions/${transactionId}`, config);
-        const newTransactionsList = await axios.get('http://localhost:5000/transactions', config);
+        await axios.delete(`https://projeto13-mywallet-fgarrote.herokuapp.com/transactions/${transactionId}`, config);
+        const newTransactionsList = await axios.get('https://projeto13-mywallet-fgarrote.herokuapp.com/transactions', config);
         setTransactionsList(newTransactionsList.data);
       } catch (error) {
         localStorage.clear();

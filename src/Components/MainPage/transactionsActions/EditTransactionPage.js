@@ -39,7 +39,7 @@ export default function EditTransactionPage() {
     };
 
     try {
-      await axios.put(`http://localhost:5000/transactions/${id}`, transaction, { headers: { Authorization: token } });
+      await axios.put(`https://projeto13-mywallet-fgarrote.herokuapp.com/transactions/${id}`, transaction, { headers: { Authorization: token } });
       alert('Sua entrada foi registrada! :)');
       navigate('/account');
     } catch (error) {

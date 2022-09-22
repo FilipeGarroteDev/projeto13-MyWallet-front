@@ -44,7 +44,7 @@ export default function Inflow() {
       };
 
       try {
-        await axios.post('http://localhost:5000/transactions', transaction, { headers: { Authorization: token } });
+        await axios.post('https://projeto13-mywallet-fgarrote.herokuapp.com/transactions', transaction, { headers: { Authorization: token } });
         alert('Sua entrada foi registrada! :)');
         navigate('/account');
       } catch (error) {

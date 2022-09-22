@@ -34,7 +34,7 @@ export default function SignIn() {
       }
 
       try {
-        const loginPromise = await axios.post('http://localhost:5000/login', login);
+        const loginPromise = await axios.post('https://projeto13-mywallet-fgarrote.herokuapp.com/login', login);
         localStorage.setItem('token', loginPromise.data);
         navigate('/account');
       } catch (error) {

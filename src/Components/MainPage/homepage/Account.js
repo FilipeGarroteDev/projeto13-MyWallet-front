@@ -22,7 +22,7 @@ export default function Account() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const transactions = await axios.get('http://localhost:5000/transactions', {
+        const transactions = await axios.get('https://projeto13-mywallet-fgarrote.herokuapp.com/transactions', {
           headers: {
             Authorization: token,
           },
@@ -39,7 +39,7 @@ export default function Account() {
 
   async function clearSession() {
     try {
-      await axios.delete(`http://localhost:5000/session/${token}`);
+      await axios.delete(`https://projeto13-mywallet-fgarrote.herokuapp.com/session/${token}`);
     } catch (error) {
       alert(error.response.data);
     }
